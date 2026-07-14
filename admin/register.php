@@ -44,145 +44,394 @@ if (isset($_POST['register'])) {
 }
 ?>
 <!DOCTYPE html>
-<html class="light" lang="id">
+<html lang="id">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Register Admin | EduToraja</title>
-    
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Serif:wght@400;700&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "surface-container-lowest": "#ffffff",
-                        "on-tertiary-fixed": "#410006",
-                        "on-tertiary-fixed-variant": "#832428",
-                        "on-primary-fixed": "#321200",
-                        "tertiary": "#8f2d30",
-                        "tertiary-container": "#ae4546",
-                        "secondary": "#446464",
-                        "on-background": "#1b1c1a",
-                        "on-surface-variant": "#54433c",
-                        "on-primary": "#ffffff",
-                        "surface-dim": "#dbdad6",
-                        "primary-fixed": "#ffdbc9",
-                        "outline": "#87736b",
-                        "on-secondary-fixed-variant": "#2c4c4c",
-                        "inverse-on-surface": "#f2f0ed",
-                        "surface-container-low": "#f5f3ef",
-                        "primary-fixed-dim": "#ffb68c",
-                        "inverse-primary": "#ffb68c",
-                        "surface-container": "#efeeea",
-                        "surface-variant": "#e4e2de",
-                        "outline-variant": "#dac1b8",
-                        "surface-bright": "#fbf9f5",
-                        "surface-container-highest": "#e4e2de",
-                        "on-primary-fixed-variant": "#753401",
-                        "on-tertiary-container": "#ffe0df",
-                        "on-error": "#ffffff",
-                        "secondary-fixed-dim": "#abcdcd",
-                        "inverse-surface": "#30312e",
-                        "on-secondary-container": "#4a6a6a",
-                        "secondary-container": "#c6e9e9",
-                        "primary-container": "#9e5421",
-                        "surface-container-high": "#eae8e4",
-                        "on-secondary": "#ffffff",
-                        "background": "#fbf9f5",
-                        "on-primary-container": "#ffe1d2",
-                        "secondary-fixed": "#c6e9e9",
-                        "surface-tint": "#934b19",
-                        "error": "#ba1a1a",
-                        "on-secondary-fixed": "#002020",
-                        "on-surface": "#1b1c1a",
-                        "primary": "#803d0a",
-                        "surface": "#fbf9f5",
-                        "on-tertiary": "#ffffff",
-                        "tertiary-fixed": "#ffdad8",
-                        "error-container": "#ffdad6",
-                        "tertiary-fixed-dim": "#ffb3b0",
-                        "on-error-container": "#93000a"
-                    },
-                    fontFamily: {
-                        "headline": ["Noto Serif"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-                },
-            },
-        }
-    </script>
+
+    <!-- Google Fonts: Fraunces + Plus Jakarta Sans (senada website utama) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
-        .pa-ssura-pattern {
-            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBmfrcgcELznYg_N8Y3DQjChqEpXFdulqEWhDfOwUK79iDFt37faV1aFOBIf_mt7xEEphg_ESUzJ76C0lQ7W8C7VzVKTvZ7dq44k110RJ0I2i48Si-D8XOUIes1oBvPcBOLABTazkgABHZfHetWWBfshVPsX-XMJV9tSo5HQeifRgyUUCoI8WSsOivJzmItVqyiXA7ykXIMClmNZmabiIeQ-E4AiLpZOAUt0Q6NOmzyGfvelxgBcQEY9-FHf_ba5ZXyp3XQ94gE75x3);
-            opacity: 0.04;
+        /* ===== PALET UKIRAN PA'SSURA ===== */
+        :root {
+            --ink: #191008;
+            --ink-soft: #26180c;
+            --red: #a5341f;
+            --red-deep: #7e2415;
+            --gold: #d9a13c;
+            --gold-soft: #e8c37c;
+            --cream: #f6efe2;
+            --cream-deep: #ede1cc;
+            --wood: #934b19;
+            --text-main: #33241a;
+            --text-light: #7d6c5c;
+            --ok: #3d6b4f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(147, 75, 25, 0.35), transparent 55%),
+                radial-gradient(ellipse at 85% 100%, rgba(165, 52, 31, 0.28), transparent 55%),
+                linear-gradient(160deg, var(--ink-soft), var(--ink));
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Pola belah ketupat ukiran samar di latar */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M28 6 L50 28 L28 50 L6 28 Z' fill='none' stroke='%23d9a13c' stroke-width='1'/%3E%3Cpath d='M28 18 L38 28 L28 38 L18 28 Z' fill='none' stroke='%23a5341f' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 56px 56px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        /* ===== KARTU ===== */
+        .login-card {
+            width: 100%;
+            max-width: 410px;
+            background: var(--cream);
+            border-radius: 10px;
+            border: 1px solid rgba(217, 161, 60, 0.35);
+            box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(26px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Balok ukiran zigzag di puncak kartu */
+        .login-card::before {
+            content: '';
+            display: block;
+            height: 10px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10' viewBox='0 0 20 10'%3E%3Crect width='20' height='10' fill='%23191008'/%3E%3Cpath d='M0 10 L5 2 L10 10 Z' fill='%23d9a13c'/%3E%3Cpath d='M10 10 L15 2 L20 10 Z' fill='%23a5341f'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-size: 20px 10px;
+        }
+
+        .card-inner { padding: 38px 36px 30px; }
+
+        /* ===== HEADER ===== */
+        .brand { text-align: center; margin-bottom: 28px; }
+        .brand-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 18px;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--ink);
+        }
+        .brand-icon i {
+            transform: rotate(-45deg);
+            color: var(--gold);
+            font-size: 1.3rem;
+        }
+        .brand h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+        .brand p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 5px;
+            letter-spacing: 0.04em;
+        }
+
+        /* ===== ALERT ===== */
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 16px;
+            border-radius: 6px;
+            font-size: 0.87rem;
+            font-weight: 500;
+            margin-bottom: 22px;
+            animation: shake 0.4s ease;
+        }
+        .alert.error {
+            background: rgba(165, 52, 31, 0.1);
+            border: 1px solid rgba(165, 52, 31, 0.4);
+            color: var(--red-deep);
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* ===== FORM ===== */
+        .field { margin-bottom: 18px; }
+
+        .field label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--wood);
+            margin-bottom: 8px;
+        }
+
+        .input-wrap { position: relative; }
+
+        .input-wrap > i.lead {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 0.9rem;
+            transition: color 0.25s;
+            pointer-events: none;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            padding: 13px 44px 13px 42px;
+            border: 1px solid rgba(147, 75, 25, 0.35);
+            border-radius: 6px;
+            background: #fffdf8;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+        .input-wrap input::placeholder { color: #b5a691; }
+
+        .input-wrap input:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(165, 52, 31, 0.12);
+        }
+        .input-wrap:focus-within > i.lead { color: var(--red); }
+
+        /* Status cocok / tidak cocok pada konfirmasi password */
+        .input-wrap input.match-ok {
+            border-color: var(--ok);
+            box-shadow: 0 0 0 3px rgba(61, 107, 79, 0.12);
+        }
+        .input-wrap input.match-bad {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(165, 52, 31, 0.12);
+        }
+        .match-hint {
+            display: none;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-top: 7px;
+            align-items: center;
+            gap: 6px;
+        }
+        .match-hint.ok  { display: flex; color: var(--ok); }
+        .match-hint.bad { display: flex; color: var(--red-deep); }
+
+        /* Tombol lihat/sembunyikan password */
+        .toggle-pass {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.25s, background 0.25s;
+        }
+        .toggle-pass:hover { color: var(--red); background: rgba(165, 52, 31, 0.08); }
+
+        /* ===== TOMBOL DAFTAR ===== */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            background: var(--red);
+            color: var(--cream);
+            border: none;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s, transform 0.15s, box-shadow 0.3s;
+        }
+        .btn-login:hover {
+            background: var(--red-deep);
+            box-shadow: 0 12px 24px -10px rgba(165, 52, 31, 0.7);
+        }
+        .btn-login:active { transform: scale(0.98); }
+
+        /* ===== TAUTAN BAWAH ===== */
+        .card-footer {
+            margin-top: 26px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(147, 75, 25, 0.18);
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-light);
+        }
+        .card-footer a {
+            color: var(--red);
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+        .card-footer a:hover { color: var(--red-deep); text-decoration: underline; }
+
+        .under-card {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(232, 195, 124, 0.55);
+        }
+
+        .page-wrap { width: 100%; max-width: 410px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
-<body class="bg-surface font-body text-on-surface antialiased min-h-screen flex items-center justify-center relative p-4">
-    <div class="absolute inset-0 pa-ssura-pattern pointer-events-none"></div>
+<body>
 
-    <div class="bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 w-full max-w-md p-8 relative z-10">
-        
-        <div class="text-center mb-8">
-            <div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mx-auto mb-4">
-                <span class="material-symbols-outlined text-3xl">person_add</span>
+    <div class="page-wrap">
+        <div class="login-card">
+            <div class="card-inner">
+
+                <div class="brand">
+                    <div class="brand-icon"><i class="fa-solid fa-user-plus"></i></div>
+                    <h1>Daftar Admin Baru</h1>
+                    <p>Buat akun pengelola sistem EduToraja</p>
+                </div>
+
+                <?php if($error): ?>
+                    <div class="alert error">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <?= $error ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="POST" action="">
+                    <div class="field">
+                        <label for="username">Username Baru</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-user lead"></i>
+                            <input type="text" id="username" name="username" autocomplete="off" required placeholder="Masukkan username">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock lead"></i>
+                            <input type="password" id="password" name="password" required placeholder="Masukkan password" oninput="checkMatch()">
+                            <button type="button" class="toggle-pass" onclick="togglePassword('password', this)" aria-label="Tampilkan password">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirm_password">Konfirmasi Password</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-shield-halved lead"></i>
+                            <input type="password" id="confirm_password" name="confirm_password" required placeholder="Ulangi password" oninput="checkMatch()">
+                            <button type="button" class="toggle-pass" onclick="togglePassword('confirm_password', this)" aria-label="Tampilkan password">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="match-hint" id="matchHint"></span>
+                    </div>
+
+                    <button type="submit" name="register" class="btn-login">
+                        <i class="fa-solid fa-user-check"></i> Daftar Sekarang
+                    </button>
+                </form>
+
+                <div class="card-footer">
+                    Sudah punya akun? <a href="index.php">Login di sini</a>
+                </div>
+
             </div>
-            <h2 class="font-headline text-2xl font-bold text-on-surface tracking-tight">Daftar Admin Baru</h2>
-            <p class="text-sm text-on-surface-variant mt-1">Buat akun pengelola sistem baru</p>
         </div>
 
-        <?php if($error): ?>
-            <div class="bg-error-container text-on-error-container p-4 rounded-lg mb-6 flex items-center gap-3 text-sm font-medium">
-                <span class="material-symbols-outlined">error</span>
-                <?= $error ?>
-            </div>
-        <?php endif; ?>
-
-        <form method="POST" action="">
-            <div class="mb-5">
-                <label class="block text-sm font-bold text-on-surface-variant mb-2">Username Baru</label>
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60">person</span>
-                    <input type="text" name="username" class="w-full pl-10 pr-4 py-3 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-primary text-sm bg-surface-container-low transition-colors" autocomplete="off" required placeholder="Masukkan username">
-                </div>
-            </div>
-            <div class="mb-5">
-                <label class="block text-sm font-bold text-on-surface-variant mb-2">Password</label>
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60">lock</span>
-                    <input type="password" name="password" class="w-full pl-10 pr-4 py-3 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-primary text-sm bg-surface-container-low transition-colors" required placeholder="Masukkan password">
-                </div>
-            </div>
-            <div class="mb-8">
-                <label class="block text-sm font-bold text-on-surface-variant mb-2">Konfirmasi Password</label>
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60">verified_user</span>
-                    <input type="password" name="confirm_password" class="w-full pl-10 pr-4 py-3 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-primary text-sm bg-surface-container-low transition-colors" required placeholder="Ulangi password">
-                </div>
-            </div>
-            
-            <button type="submit" name="register" class="w-full py-3.5 bg-primary text-on-primary rounded-xl font-bold hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-                <span>Daftar Sekarang</span>
-                <span class="material-symbols-outlined text-sm">how_to_reg</span>
-            </button>
-        </form>
-
-        <div class="mt-8 pt-6 border-t border-outline-variant/20 text-center">
-            <span class="text-sm text-on-surface-variant">Sudah punya akun? </span>
-            <a href="index.php" class="text-sm font-bold text-primary hover:underline">Login di sini</a>
-        </div>
-
+        <p class="under-card">Sistem Edukasi Pariwisata &bull; Tana Toraja</p>
     </div>
 
+    <script>
+        // Lihat / sembunyikan password
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            const icon = btn.querySelector('i');
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            icon.classList.toggle('fa-eye', !show);
+            icon.classList.toggle('fa-eye-slash', show);
+            btn.setAttribute('aria-label', show ? 'Sembunyikan password' : 'Tampilkan password');
+        }
+
+        // Cek kecocokan password secara langsung saat mengetik
+        function checkMatch() {
+            const pass = document.getElementById('password').value;
+            const conf = document.getElementById('confirm_password');
+            const hint = document.getElementById('matchHint');
+
+            if (conf.value === '') {
+                conf.classList.remove('match-ok', 'match-bad');
+                hint.className = 'match-hint';
+                hint.innerHTML = '';
+                return;
+            }
+
+            if (pass === conf.value) {
+                conf.classList.add('match-ok');
+                conf.classList.remove('match-bad');
+                hint.className = 'match-hint ok';
+                hint.innerHTML = '<i class="fa-solid fa-circle-check"></i> Password cocok';
+            } else {
+                conf.classList.add('match-bad');
+                conf.classList.remove('match-ok');
+                hint.className = 'match-hint bad';
+                hint.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Password belum cocok';
+            }
+        }
+    </script>
 </body>
 </html>

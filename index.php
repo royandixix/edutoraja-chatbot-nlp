@@ -656,6 +656,134 @@
         .goog-te-gadget .goog-te-combo:hover { border-color: var(--gold); }
         .goog-te-gadget .goog-te-combo option { color: var(--text-main); }
 
+        /* ===== INTERAKTIF: PROGRESS BAR SCROLL ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--red), var(--gold));
+            z-index: 2000;
+            transition: width 0.1s linear;
+        }
+
+        /* ===== INTERAKTIF: NAVBAR MENGECIL SAAT SCROLL ===== */
+        nav { transition: padding 0.35s ease, background 0.35s ease, box-shadow 0.35s ease; }
+        nav.scrolled {
+            padding: 10px 50px;
+            background: rgba(25, 16, 8, 0.97);
+            box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+        }
+        @media (max-width: 900px) { nav.scrolled { padding: 10px 20px; } }
+
+        .nav-links li a.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        /* ===== INTERAKTIF: MUNCUL SAAT DI-SCROLL (REVEAL) ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Efek berurutan untuk kartu */
+        .reveal.d1 { transition-delay: 0.1s; }
+        .reveal.d2 { transition-delay: 0.2s; }
+        .reveal.d3 { transition-delay: 0.3s; }
+
+        /* ===== INTERAKTIF: ANIMASI HERO BERTAHAP ===== */
+        .hero .eyebrow, .hero h1, .hero p, .hero-actions {
+            opacity: 0;
+            animation: heroUp 0.9s ease forwards;
+        }
+        .hero h1        { animation-delay: 0.25s; }
+        .hero p         { animation-delay: 0.5s; }
+        .hero-actions   { animation-delay: 0.75s; }
+        @keyframes heroUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Panah ajakan scroll di hero */
+        .scroll-hint {
+            position: absolute;
+            bottom: 46px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold-soft);
+            font-size: 1.3rem;
+            animation: bob 1.8s ease-in-out infinite;
+            text-decoration: none;
+        }
+        @keyframes bob {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ===== INTERAKTIF: KARTU MIRING MENGIKUTI KURSOR ===== */
+        @media (pointer: fine) {
+            .card { transform-style: preserve-3d; will-change: transform; }
+        }
+
+        /* ===== INTERAKTIF: TOMBOL KEMBALI KE ATAS ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            width: 48px;
+            height: 48px;
+            border-radius: 3px;
+            background: var(--ink);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(14px);
+            transition: opacity 0.3s, transform 0.3s, visibility 0.3s, background 0.3s;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { background: var(--red-deep); color: var(--cream); }
+        @media (max-width: 900px) { .back-to-top { left: 20px; bottom: 28px; } }
+
+        /* ===== INTERAKTIF: CHIP PERTANYAAN CEPAT CHATBOT ===== */
+        .chat-suggest {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 14px 0;
+            background: var(--cream);
+        }
+        .chip {
+            border: 1px solid rgba(147, 75, 25, 0.4);
+            background: #fffdf8;
+            color: var(--wood);
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 7px 13px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s, transform 0.15s;
+        }
+        .chip:hover {
+            background: var(--red);
+            border-color: var(--red);
+            color: var(--cream);
+            transform: translateY(-2px);
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             nav { padding: 14px 20px; grid-template-columns: auto 1fr; gap: 12px; }
@@ -675,7 +803,9 @@
 </head>
 <body>
 
-    <nav>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav id="mainNav">
         <a href="#" class="logo" style="justify-self: start;"><i class="fa-solid fa-mountain-sun"></i> Edu<em>Toraja</em></a>
         <ul class="nav-links" style="justify-self: center;">
             <li><a href="#home">Beranda</a></li>
@@ -736,6 +866,7 @@
                 <a href="#destinasi" class="btn-ghost"><i class="fa-solid fa-map-location-dot"></i> Lihat Destinasi</a>
             </div>
         </div>
+        <a href="#tentang" class="scroll-hint" aria-label="Gulir ke bawah"><i class="fa-solid fa-chevron-down"></i></a>
     </section>
 
     <div class="passura-divider"></div>
@@ -847,6 +978,9 @@
         <p>&copy; <?= date("Y") ?> EduToraja - Sistem Edukasi Pariwisata &amp; Budaya. Dibuat dengan Kecerdasan Bahasa (NLP).</p>
     </footer>
 
+    <!-- Tombol Kembali ke Atas -->
+    <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas"><i class="fa-solid fa-chevron-up"></i></button>
+
     <!-- Chatbot Floating Button -->
     <button class="chatbot-btn" id="chatbotToggle"><i class="fa-solid fa-comment-dots"></i></button>
 
@@ -871,6 +1005,11 @@
             <div class="typing-indicator" id="typingIndicator">
                 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             </div>
+        </div>
+        <div class="chat-suggest">
+            <button class="chip" onclick="askChip(this)">Apa itu Tongkonan?</button>
+            <button class="chip" onclick="askChip(this)">Apa itu Rambu Solo'?</button>
+            <button class="chip" onclick="askChip(this)">Sejarah Toraja</button>
         </div>
         <div class="chat-footer">
             <input type="text" class="chat-input" id="chatInput" placeholder="Tanyakan sejarah Toraja..." onkeypress="handleKeyPress(event)">
@@ -955,6 +1094,91 @@
             chatBox.insertBefore(msgDiv, typingIndicator);
             scrollToBottom();
         }
+
+        // Chip pertanyaan cepat -> buka panel & kirim langsung
+        function askChip(el) {
+            chatInput.value = el.textContent;
+            sendMessage();
+        }
+
+        /* ============================================================
+           INTERAKSI HALAMAN
+           ============================================================ */
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 1) Progress bar scroll + navbar mengecil + tombol back-to-top
+        const progressBar = document.getElementById('scrollProgress');
+        const mainNav = document.getElementById('mainNav');
+        const backToTop = document.getElementById('backToTop');
+
+        function onScroll() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+            mainNav.classList.toggle('scrolled', scrollTop > 60);
+            backToTop.classList.toggle('show', scrollTop > 500);
+            highlightNav(scrollTop);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+
+        // 2) Menu aktif mengikuti posisi scroll
+        const sections = ['home', 'destinasi', 'budaya'].map(id => document.getElementById(id));
+        const navAnchors = document.querySelectorAll('.nav-links > li > a[href^="#"]');
+        function highlightNav(scrollTop) {
+            let current = 'home';
+            sections.forEach(sec => {
+                if (sec && scrollTop >= sec.offsetTop - 200) current = sec.id;
+            });
+            navAnchors.forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+            });
+        }
+
+        // 3) Elemen muncul bertahap saat di-scroll (reveal)
+        const revealTargets = document.querySelectorAll('.card, .about-col, .section-title, .section-sub, .ornament, .eyebrow');
+        if (!reduceMotion && 'IntersectionObserver' in window) {
+            revealTargets.forEach((el, i) => {
+                el.classList.add('reveal');
+                // beri jeda berurutan untuk kartu & kolom dalam grid yang sama
+                if (el.classList.contains('card') || el.classList.contains('about-col')) {
+                    const siblings = Array.from(el.parentElement.children);
+                    const idx = siblings.indexOf(el) % 3;
+                    if (idx === 1) el.classList.add('d1');
+                    if (idx === 2) el.classList.add('d2');
+                }
+            });
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            revealTargets.forEach(el => observer.observe(el));
+        }
+
+        // 4) Kartu sedikit miring mengikuti kursor (desktop saja)
+        if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const r = card.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    card.style.transform = `translateY(-10px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+        }
+
+        // Jalankan sekali di awal agar status sesuai posisi scroll saat ini
+        onScroll();
     </script>
 </body>
 </html>
